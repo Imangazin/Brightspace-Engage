@@ -63,7 +63,4 @@ function getEvents($url, $auth_token){
     }
     return $events;
 }
-
-echo var_dump(getEvents($config['eventUrl'] . '/v3.0/events/event?organizationIds=2717', $config['eventAuthToken']));
-
 ?>
