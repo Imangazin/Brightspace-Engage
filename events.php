@@ -1,12 +1,12 @@
 <?php
 //BS authorization
-require_once("info.php");
+require_once("src/info.php");
 //BS functions
-require_once 'brightspaceFunctions.php';
+require_once 'src/brightspaceFunctions.php';
 //Experience BU functions
-require_once 'experienceBUFunctions.php';
+require_once 'src/experienceBUFunctions.php';
 // Load up the LTI Support code
-require_once 'ims-blti/blti.php';
+require_once 'src/ims-blti/blti.php';
 
 //Initialize, all secrets as 'secret', do not set session, and do not redirect
 $context = new BLTI($lti_auth['secret'], false, false);

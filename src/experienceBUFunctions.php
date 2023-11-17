@@ -1,13 +1,4 @@
 <?php
-require_once('info.php');
-ini_set('display_errors', 1);
-
-// $authtoken = config['eventAuthToken'];
-// $baseUrl = config['eventUrl'];
-
-// $branch_id='16';
-// $organizationId = '2717';
-
 function experienceBUcall($url, $auth_token){
 
     $ch = curl_init($url);
