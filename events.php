@@ -13,18 +13,14 @@ $context = new BLTI($lti_auth['secret'], false, false);
 
 //Check the key is correct
 if($lti_auth['key'] == $context->info['oauth_consumer_key']){
-
-    if (isset($_GET['organizations'])) {
-        $orgs_respsponse = getOrganizations($config['eventUrl'] . '/v3.0/organizations/organization?statuses=Active', $auth_token);
-        exit($orgs_respsponse);
-    }
-
     if (isset($_POST['organizationId'])){
-        $events_response = getEvents($config['eventUrl'] . '/v3.0/organizations/organization?statuses=Active', $auth_token);
+        $events_response = getResponse($config['eventUrl'] . '/v3.0/events/event?organizationIds=' . $_POST['organizationId'], $auth_token);
+        exit($events_respsponse);
+    } else {
+        $orgs_respsponse = getResponse($config['eventUrl'] . '/v3.0/organizations/organization?statuses=Active', $auth_token);
+        echo $orgs_respsponse;
+        readfile("../setup.html");
     }
-        
-    readfile("../setup.html");
-    
 }
 else{
     echo 'LTI credentials not valid. Please refresh the page and try again. If you continue to receive this message please contact <a href="mailto:'.$supportEmail.'?Subject= LTI connection issue" target="_top">'.$supportEmail.'</a>';

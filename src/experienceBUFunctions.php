@@ -16,42 +16,22 @@ function experienceBUcall($url, $auth_token){
     return json_decode($response);
 }
 
-function getOrganizations($url, $auth_token){
-    $organizations = array();
+function getResponse($url, $auth_token){
+    $result = array();
     $isMore = true;
     $skip = 0;
     $take = 20;
     while($isMore){
         $response = experienceBUcall($url . '&take=' . $take . '&skip=' . $skip, $auth_token);
         foreach ($response->items as $each){  
-            $organizations[] = array(
-                "organization_id" => $each->id,
-                "name"            => $each->namezz
+            $result[] = array(
+                "id"   => $each->id,
+                "name" => $each->name
             );
         }
         $skip = $skip + $take;
         if ($skip > $response->totalItems) $isMore = false;
     }
-    echo sizeof($organizations);
-    return $organizations;
-}
-
-function getEvents($url, $auth_token){
-    $events = array();
-    $isMore = true;
-    $skip = 0;
-    $take = 20;
-    while($isMore){
-        $response = experienceBUcall($url . '&take=' . $take . '&skip=' . $skip, $auth_token);
-        foreach ($response->items as $each){  
-            $events[] = array(
-                "event_id" => $each->id,
-                "name"     => $each->name
-            );
-        }
-        $skip = $skip + $take;
-        if ($skip > $response->totalItems) $isMore = false;
-    }
-    return $events;
+    return json_decode($result);
 }
 ?>
