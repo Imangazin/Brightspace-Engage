@@ -12,10 +12,10 @@ $(document).ready(function() {
 
   $.get('src/experienceBU.php', function (data) {
     console.log("data: " + data);
-    data.forEach(option => {
+    data.forEach(function(each){
       const optionElement = document.createElement("option");
-      optionElement.value = data.id;
-      optionElement.text = data.name;
+      optionElement.value = each.id;
+      optionElement.text = each.name;
       orgSelectTag.appendChild(optionElement);
     });
   }).fail(function (xhr, status, error) {
