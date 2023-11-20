@@ -34,7 +34,7 @@ function getResponse($url, $auth_token){
         $skip = $skip + $take;
         if ($skip > $response->totalItems) $isMore = false;
     }
-    return json_decode($result);
+    return json_encode($result);
 }
 
 if (isset($_POST['organizationId'])){
