@@ -11,6 +11,7 @@ $(document).ready(function() {
   });
 
   $.get('events.php', function (data) {
+    console.log("data: " + data);
     data.forEach(option => {
       const optionElement = document.createElement("option");
       optionElement.value = data.id;
