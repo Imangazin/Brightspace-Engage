@@ -19,7 +19,7 @@ if($lti_auth['key'] == $context->info['oauth_consumer_key']){
     } else {
         $orgs_respsponse = getResponse($config['eventUrl'] . '/v3.0/organizations/organization?statuses=Active', $auth_token);
         echo $orgs_respsponse;
-        readfile("../setup.html");
+        readfile("setup.html");
     }
 }
 else{
