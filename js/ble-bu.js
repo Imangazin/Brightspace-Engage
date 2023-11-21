@@ -10,7 +10,8 @@ $(document).ready(function() {
     width: '100%', // Adjust the width as needed
   });
 
-  $.get('src/experienceBU.php', function (data) { 
+  $.get('src/experienceBU.php', function (data) {
+    data = JSON.parse(data); 
     console.log("data: " + data);
     data.forEach(function(each){
       const optionElement = document.createElement("option");
@@ -21,7 +22,6 @@ $(document).ready(function() {
   }).fail(function (xhr, status, error) {
     console.error('GET request failed:', status, error);
   });
-
 });
 
 // Add an event listener to the checkbox
