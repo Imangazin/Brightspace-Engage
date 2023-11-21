@@ -44,10 +44,10 @@ function getResponse($url, $auth_token){
 if($lti_auth['key'] == $toolKey){
     if (isset($_POST['organizationId'])){
         $events_response = getResponse($config['eventUrl'] . '/v3.0/events/event?organizationIds=' . $_POST['organizationId'], $config['eventAuthToken']);
-        echo $events_respsponse;
+        return $events_respsponse;
     } else {
         $orgs_respsponse = getResponse($config['eventUrl'] . '/v3.0/organizations/organization?statuses=Active', $config['eventAuthToken']);
-        echo $orgs_respsponse;
+        return $orgs_respsponse;
     }
 }
 ?>

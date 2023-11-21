@@ -12,7 +12,6 @@ $(document).ready(function() {
 
   $.get('src/experienceBU.php', function (data) {
     data = JSON.parse(data); 
-    console.log("data: " + data);
     data.forEach(function(each){
       const optionElement = document.createElement("option");
       optionElement.value = each.id;
