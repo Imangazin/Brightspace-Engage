@@ -15,7 +15,7 @@ $currentCookieParams = session_get_cookie_params();
 $cookie_domain= $_SERVER['HTTP_HOST'];
 session_set_cookie_params(
     $currentCookieParams["lifetime"],
-    '/BLETEST/Brightspace-Engage/; samesite=None',
+    '/BLETEST/Brightspace-Engage/; samesite=Lax',
     $cookie_domain,
     "1",
     "1"
