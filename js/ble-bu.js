@@ -10,7 +10,7 @@ $(document).ready(function() {
     width: '100%', // Adjust the width as needed
   });
 
-  $.get('src/experienceBU.php', function (data) {
+  $.get('src/experienceBU.php', function (data) { 
     console.log("data: " + data);
     data.forEach(function(each){
       const optionElement = document.createElement("option");
