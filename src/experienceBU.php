@@ -38,7 +38,7 @@ function getResponse($url, $auth_token){
         $skip = $skip + $take;
         if ($skip > $response->totalItems) $isMore = false;
     }
-    return $result;
+    return json_encode($result);
 }
 
 if($lti_auth['key'] == $toolKey){
