@@ -4,7 +4,7 @@ require_once("src/info.php");
 //BS functions
 //require_once 'src/brightspaceFunctions.php';
 //Experience BU functions
-require_once 'src/experienceBU.php';
+//require_once 'src/experienceBU.php';
 // Load up the LTI Support code
 require_once 'src/ims-blti/blti.php';
 
