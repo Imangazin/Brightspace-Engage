@@ -2,7 +2,7 @@
 //BS authorization
 require_once("src/info.php");
 //BS functions
-require_once 'src/brightspaceFunctions.php';
+//require_once 'src/brightspaceFunctions.php';
 //Experience BU functions
 require_once 'src/experienceBU.php';
 // Load up the LTI Support code
