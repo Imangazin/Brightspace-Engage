@@ -42,7 +42,7 @@ function getResponse($url, $auth_token){
 }
 
 if($lti_auth['key'] == $toolKey){
-    if (isset($_POST['organizationId'])){
+    if (isset($_GET['organizationId'])){
         $events_response = getResponse($config['eventUrl'] . '/v3.0/events/event?organizationIds=' . $_POST['organizationId'], $config['eventAuthToken']);
         echo $events_respsponse;
     } else {
