@@ -1,5 +1,6 @@
 let ebuGradeSyncCheck = document.getElementById("ebuGradeSync");
 let divHidden = document.getElementById("ebuGradeSyncDiv");
+let gradeItem = document.getElementById("gradeItem");
 let orgSelectTag = document.getElementById("ebuOrganization");
 let eventSelectTag = document.getElementById("ebuEvent");
 let url = window.top.location.href;
@@ -52,15 +53,17 @@ $(document).ready(function() {
 // Add an event listener to the checkbox
 ebuGradeSyncCheck.addEventListener("change", function () {
   if (ebuGradeSyncCheck.checked) {
-    $get('/d2l/api/le/(version)/'+orgUnitId+'/grades/', function(data){
-      data = JSON.parse(data);
-      data.forEach(function (each){
+    $.get('src/brightspace.php', function (data) {
+      data = JSON.parse(data); 
+      data.forEach(function(each){
         const optionElement = document.createElement("option");
-        optionElement.value = each.ID;
-        optionElement.text = each.Name;
-        divHidden.appendChild(optionElement);
+        optionElement.value = each.id;
+        optionElement.text = each.name;
+        gradeItem.appendChild(optionElement);
       });
-    })
+    }).fail(function (xhr, status, error) {
+      console.error('GET request failed:', status, error);
+    });
     divHidden.classList.remove("hidden");
   } else {
     divHidden.classList.add("hidden");

@@ -1,10 +1,7 @@
 <?php
 //BS authorization
 require_once("src/info.php");
-//BS functions
-//require_once 'src/brightspaceFunctions.php';
-//Experience BU functions
-//require_once 'src/experienceBU.php';
+
 // Load up the LTI Support code
 require_once 'src/ims-blti/blti.php';
 
@@ -24,6 +21,7 @@ session_set_cookie_params(
 
 session_start();
 $_SESSION['toolKey'] = $context->info['oauth_consumer_key'];
+$_SESSION['orgUnitId'] = $context->info['context_id'];
 session_write_close();
 
 //Check the key is correct

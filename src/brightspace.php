@@ -3,10 +3,15 @@
 require_once('info.php');
 require_once 'lib/D2LAppContextFactory.php';
 
+session_start();
+$toolKey = $_SESSION['toolKey'];
+$orgUnitId = $_SESSION['orgUnitId'];
+session_write_close();
+
 /*
     Brightspace secure (OAUTH 1.0) API call (POST, GET, PUT) 
 */
-function doValenceRequest($verb, $route, $headers_list, $postFields = array()){
+function doValenceRequest($verb, $route, $postFields = array()){
 
     global $config;
     // Create authContext
@@ -28,9 +33,7 @@ function doValenceRequest($verb, $route, $headers_list, $postFields = array()){
         CURLOPT_URL            => $uri,
         CURLOPT_SSL_VERIFYPEER => true,
         CURLOPT_POSTFIELDS     => $postFields,
-        CURLOPT_HTTPHEADER     => $headers_list,
-        CURLOPT_FOLLOWLOCATION => false
-        //array('Accept: application/json', 'Content-Type: application/json'),	
+        CURLOPT_HTTPHEADER     => array('Accept: application/json', 'Content-Type: application/json'),	
     );
     
     curl_setopt_array($ch, $options);
@@ -42,7 +45,24 @@ function doValenceRequest($verb, $route, $headers_list, $postFields = array()){
 
     curl_close($ch);
 
-    return(array('Code'=>$httpCode, 'response'=>json_decode($response)));
+    return json_decode($response);
+}
+
+function getGrades($url){
+    $result = array();
+    $response = doValenceRequest('GET',$url);
+        foreach ($response as $each){  
+            $result[] = array(
+                "id"   => $each->Id,
+                "name" => $each->Name
+            );
+        }
+    return json_encode($result);
+}
+
+if($lti_auth['key'] == $toolKey){
+    $grade_items = getGrades('/d2l/api/le/'. $config['LP_Version'] . '/' . $orgUnitId . '/' . 'grades/');
+    echo $grade_items;
 }
 
 ?>
