@@ -12,15 +12,16 @@ $(document).ready(function() {
     width: '100%', // Adjust the width as needed
   });
 
+  //refresh options
+  orgSelectTag.innerHTML = '';
+  eventSelectTag.innerHTML = '';
+  gradeItem.innerHTML = '';
+
+  //Load BU events for given organization
   $('#ebuOrganization').on('select2:select', function (e) {
     const selectedValue = e.params.data.id;
     const selectedText = e.params.data.text;
     const selectId = $(this).attr('id'); // Get the ID of the changed select
-
-    console.log('Select ID:', selectId);
-    console.log('Selected Value:', selectedValue);
-    console.log('Selected Text:', selectedText);
-    // Add your custom logic here based on the selected value/text and select ID
     $.get('src/experienceBU.php?organizationId='+selectedValue, function (data) {
       data = JSON.parse(data); 
       data.forEach(function(each){
@@ -33,7 +34,8 @@ $(document).ready(function() {
       console.error('GET request failed:', status, error);
     });
   });
-
+  
+  //Load BU Organizations
   $.get('src/experienceBU.php', function (data) {
     data = JSON.parse(data); 
     data.forEach(function(each){
@@ -50,6 +52,7 @@ $(document).ready(function() {
 
 // Add an event listener to the checkbox
 ebuGradeSyncCheck.addEventListener("change", function () {
+
   if (ebuGradeSyncCheck.checked) {
     $.get('src/brightspace.php', function (data) {
       data = JSON.parse(data); 
