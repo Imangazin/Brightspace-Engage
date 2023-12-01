@@ -1,7 +1,10 @@
-const ebuGradeSyncCheck = document.getElementById("ebuGradeSync");
-const divHidden = document.getElementById("ebuGradeSyncDiv");
+let ebuGradeSyncCheck = document.getElementById("ebuGradeSync");
+let divHidden = document.getElementById("ebuGradeSyncDiv");
 let orgSelectTag = document.getElementById("ebuOrganization");
 let eventSelectTag = document.getElementById("ebuEvent");
+let url = window.top.location.href;
+let orgUnitId = url.match(/lessons\/(\d+)/)[1];
+
 //searchable select
 $(document).ready(function() {
   $('.searchable').select2({
@@ -49,6 +52,15 @@ $(document).ready(function() {
 // Add an event listener to the checkbox
 ebuGradeSyncCheck.addEventListener("change", function () {
   if (ebuGradeSyncCheck.checked) {
+    $get('/d2l/api/le/(version)/'+orgUnitId+'/grades/', function(data){
+      data = JSON.parse(data);
+      data.forEach(function (each){
+        const optionElement = document.createElement("option");
+        optionElement.value = each.ID;
+        optionElement.text = each.Name;
+        divHidden.appendChild(optionElement);
+      });
+    })
     divHidden.classList.remove("hidden");
   } else {
     divHidden.classList.add("hidden");
