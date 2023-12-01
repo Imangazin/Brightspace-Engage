@@ -3,8 +3,6 @@ let divHidden = document.getElementById("ebuGradeSyncDiv");
 let gradeItem = document.getElementById("gradeItem");
 let orgSelectTag = document.getElementById("ebuOrganization");
 let eventSelectTag = document.getElementById("ebuEvent");
-let url = window.top.location.href;
-let orgUnitId = url.match(/lessons\/(\d+)/)[1];
 
 //searchable select
 $(document).ready(function() {
