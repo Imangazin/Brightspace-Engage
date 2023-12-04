@@ -6,33 +6,9 @@ let eventSelectTag = document.getElementById("ebuEvent");
 
 //searchable select
 $(document).ready(function() {
-  $('.searchable').select2({
+  $('.select2').select2({
     placeholder: 'Select an option', // Placeholder text
-    allowClear: true, // Option to clear selection
     width: '100%', // Adjust the width as needed
-  });
-
-  //refresh options
-  orgSelectTag.innerHTML = '';
-  eventSelectTag.innerHTML = '';
-  gradeItem.innerHTML = '';
-
-  //Load BU events for given organization
-  $('#ebuOrganization').on('select2:select', function (e) {
-    const selectedValue = e.params.data.id;
-    const selectedText = e.params.data.text;
-    const selectId = $(this).attr('id'); // Get the ID of the changed select
-    $.get('src/experienceBU.php?organizationId='+selectedValue, function (data) {
-      data = JSON.parse(data); 
-      data.forEach(function(each){
-        const optionElement = document.createElement("option");
-        optionElement.value = each.id;
-        optionElement.text = each.name;
-        eventSelectTag.appendChild(optionElement);
-      });
-    }).fail(function (xhr, status, error) {
-      console.error('GET request failed:', status, error);
-    });
   });
   
   //Load BU Organizations
@@ -50,10 +26,31 @@ $(document).ready(function() {
 
 });
 
+
+  //Load BU events for given organization
+$('#ebuOrganization').on('select2:select', function (e) {
+  eventSelectTag.innerHTML = '<option></option>';
+  const selectedValue = e.params.data.id;
+  const selectedText = e.params.data.text;
+  const selectId = $(this).attr('id'); // Get the ID of the changed select
+  $.get('src/experienceBU.php?organizationId='+selectedValue, function (data) {
+    data = JSON.parse(data); 
+    data.forEach(function(each){
+      const optionElement = document.createElement("option");
+      optionElement.value = each.id;
+      optionElement.text = each.name;
+      eventSelectTag.appendChild(optionElement);
+    });
+  }).fail(function (xhr, status, error) {
+    console.error('GET request failed:', status, error);
+  });
+});
+
 // Add an event listener to the checkbox
 ebuGradeSyncCheck.addEventListener("change", function () {
 
   if (ebuGradeSyncCheck.checked) {
+    gradeItem.innerHTML = '<option></option>';
     $.get('src/brightspace.php', function (data) {
       data = JSON.parse(data); 
       data.forEach(function(each){

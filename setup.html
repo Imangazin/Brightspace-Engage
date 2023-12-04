@@ -15,12 +15,14 @@
         <form>
             <div class="mb-3">
               <label for="ebuOrganization" class="form-label">Experience BU Organization</label>
-              <select class="form-select searchable" id="ebuOrganization" required>
+              <select class="form-select select2" id="ebuOrganization" required>
+                <option></option>
               </select>
             </div>
             <div class="mb-3">
                 <label for="ebuEvent" class="form-label">Experience BU Event</label>
-                <select class="form-select searchable" id="ebuEvent" required>
+                <select class="form-select select2" id="ebuEvent" required>
+                  <option></option>
                 </select>
             </div>
             <div class="mb-3 form-check">
@@ -29,7 +31,8 @@
             </div>
             <div class="mb-3 hidden" id="ebuGradeSyncDiv">
                 <label for="gradeItem" class="form-label">Grade Item (must exist)</label>
-                <select class="form-select" id="gradeItem">
+                <select class="form-select select2" id="gradeItem">
+                  <option></option>
                 </select>
             </div>
             <button type="submit" class="btn btn-primary">Sync</button>
