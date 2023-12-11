@@ -22,6 +22,7 @@ session_set_cookie_params(
 session_start();
 $_SESSION['toolKey'] = $context->info['oauth_consumer_key'];
 $_SESSION['orgUnitId'] = $context->info['context_id'];
+$_SESSION['userName'] = $context->info['ext_d2l_username'];
 session_write_close();
 
 //Check the key is correct

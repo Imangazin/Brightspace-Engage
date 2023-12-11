@@ -13,6 +13,8 @@ $(document).ready(function() {
   
   //Load BU Organizations
   $.get('src/experienceBU.php', function (data) {
+    eventSelectTag.innerHTML = '<option></option>';
+    gradeItem.innerHTML = '<option></option>';
     data = JSON.parse(data); 
     data.forEach(function(each){
       const optionElement = document.createElement("option");
@@ -25,7 +27,6 @@ $(document).ready(function() {
   });
 
 });
-
 
   //Load BU events for given organization
 $('#ebuOrganization').on('select2:select', function (e) {
@@ -48,7 +49,6 @@ $('#ebuOrganization').on('select2:select', function (e) {
 
 // Add an event listener to the checkbox
 ebuGradeSyncCheck.addEventListener("change", function () {
-
   if (ebuGradeSyncCheck.checked) {
     gradeItem.innerHTML = '<option></option>';
     $.get('src/brightspace.php', function (data) {
@@ -63,7 +63,10 @@ ebuGradeSyncCheck.addEventListener("change", function () {
       console.error('GET request failed:', status, error);
     });
     divHidden.classList.remove("hidden");
+    gradeItem.setAttribute('required', '');
   } else {
     divHidden.classList.add("hidden");
+    gradeItem.removeAttribute('required');
+    gradeItem.innerHTML = '<option></option>';
   }
 });

@@ -3,6 +3,7 @@ require_once("info.php");
 
 session_start();
 $toolKey = $_SESSION['toolKey'];
+$userName = $_SESSION['userName'];
 session_write_close();
 
 function experienceBUcall($url, $auth_token){
@@ -22,7 +23,7 @@ function experienceBUcall($url, $auth_token){
     return json_decode($response);
 }
 
-function getResponse($url, $auth_token){
+function getEvents($url, $auth_token){
     $result = array();
     $isMore = true;
     $skip = 0;
@@ -41,12 +42,32 @@ function getResponse($url, $auth_token){
     return json_encode($result);
 }
 
+function getOrganizationsByUsername($url, $userName, $auth_token){
+    $result = array();
+    $isMore = true;
+    $skip = 0;
+    $take = 20;
+    while($isMore){
+        $response = experienceBUcall($url . 'positionholder/?userId.username=' . $userName . '&take=' . $take . '&skip=' . $skip, $auth_token);
+        foreach ($response->items as $each){
+            $orgs = experienceBUcall($url . 'organization?ids=' . $each->organizationId, $auth_token);  
+            $result[] = array(
+                "id"   => $each->organizationId,
+                "name" => $orgs->items[0]->name
+            );
+        }
+        $skip = $skip + $take;
+        if ($skip > $response->totalItems) $isMore = false;
+    }
+    return json_encode($result);
+}
+
 if($lti_auth['key'] == $toolKey){
     if (isset($_GET['organizationId'])){
-        $events_response = getResponse($config['eventUrl'] . '/v3.0/events/event?organizationIds=' . $_GET['organizationId'], $config['eventAuthToken']);
+        $events_response = getEvents($config['eventUrl'] . '/v3.0/events/event?organizationIds=' . $_GET['organizationId'], $config['eventAuthToken']);
         echo $events_response;
     } else {
-        $orgs_response = getResponse($config['eventUrl'] . '/v3.0/organizations/organization?statuses=Active', $config['eventAuthToken']);
+        $orgs_response = getOrganizationsByUsername($config['eventUrl'] . '/v3.0/organizations/', $userName, $config['eventAuthToken']);
         echo $orgs_response;
     }
 }
